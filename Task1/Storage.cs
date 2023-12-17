@@ -30,13 +30,14 @@
 
         public void GetProductInfoById(int productId)
         {
-            try
-            {
-                Console.WriteLine(products[productId].GetInfo());
-            }
-            catch
+            if (productId >= products.Count())
             {
                 Console.WriteLine($"Продукт с Id {productId} не найден");
+
+            }
+            else
+            {
+                Console.WriteLine(products[productId].GetInfo());
             }
         }
 
@@ -44,7 +45,13 @@
         {
             try
             {
-                Console.WriteLine(products.Find(p => p.Name.ToLower() == productName.ToLower()).GetInfo());
+                foreach (Product product in products)
+                {
+                    if (product.Name.ToLower() == productName.ToLower())
+                    {
+                        Console.WriteLine(product.GetInfo());
+                    }
+                }
             }
             catch
             {

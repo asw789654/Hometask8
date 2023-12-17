@@ -1,4 +1,6 @@
-﻿namespace Task2
+﻿using System.Linq;
+
+namespace Task2
 {
     internal class Bus
     {
@@ -71,15 +73,22 @@
 
         public void EnterBas(string newPassenger)
         {
-            if (isFull)
+            if (IsFull)
             {
                 Console.WriteLine($"Все места в автобусе заняты");
             }
             else
             {
                 passengers.Add(newPassenger);
-                seats.Add(passengers.IndexOf(newPassenger), newPassenger);
-                Console.WriteLine($"Пассажир {newPassenger} сел на место{passengers.IndexOf(newPassenger) + 1}");
+                for (int i = 0; i < passengers.Count; i++)
+                {
+                    if (!seats.ContainsKey(i))
+                    {
+                        seats.Add(i, newPassenger);
+                        Console.WriteLine($"Пассажир {newPassenger} сел на место {i + 1}");
+                        break;
+                    }
+                }
             }
         }
 
@@ -87,25 +96,24 @@
         {
             for (int i = 0; i < newPassengers.Count; i++)
             {
-                if (IsFull)
-                {
-                    Console.WriteLine($"Все места в автобусе заняты");
-                    break;
-                }
-                else
-                {
-                    passengers.Add(newPassengers[i]);
-                    seats.Add(passengers.IndexOf(newPassengers[i]), newPassengers[i]);
-                    Console.WriteLine($"Пассажир {newPassengers[i]} сел на место{passengers.IndexOf(newPassengers[i]) + 1}");
-                }
+                EnterBas(newPassengers[i]);
             }
         }
 
         public void OutBas(string outPassenger)
         {
+            int key = new int();
             if (passengers.Contains(outPassenger))
             {
-                seats.Remove(passengers.IndexOf(outPassenger));
+                foreach(var seat in seats)
+                {
+                    if(seat.Value == outPassenger)
+                    {
+                        key = seat.Key;
+                        break;
+                    }
+                }
+                seats.Remove(key);
                 passengers.Remove(outPassenger);
                 Console.WriteLine($"Пассажир {outPassenger} вышел из автобуса");
             }
@@ -119,16 +127,7 @@
         {
             for (int i = 0; i < outPassengers.Count; i++)
             {
-                if (passengers.Contains(outPassengers[i]))
-                {
-                    seats.Remove(passengers.IndexOf(outPassengers[i]));
-                    passengers.Remove(outPassengers[i]);
-                    Console.WriteLine($"Пассажир {outPassengers[i]} вышел из автобуса");
-                }
-                else
-                {
-                    Console.WriteLine($"Пассажира {outPassengers[i]} нет в автобусе");
-                }
+                OutBas(outPassengers[i]);
             }
         }
 

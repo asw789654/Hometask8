@@ -19,20 +19,82 @@
 
         public string Name
         {
-            get { return name; }
-            set { name = value; }
+            get
+            {
+                if (name != null)
+                {
+                    return name;
+                }
+                else
+                {
+                    return ShopName;
+                }
+            }
+            set
+            {
+                if (value != null)
+                {
+                    name = value;
+                }
+                else
+                {
+                    name = ShopName;
+                }
+            }
         }
 
         public string ShopName
         {
-            get { return ShopName; }
-            set { ShopName = value; }
+            get
+            {
+                if (shopName != null)
+                {
+                    return ShopName;
+                }
+                else
+                {
+                    return "Название не указано";
+                }
+            }
+            set
+            {
+                if (value != null)
+                {
+                    name = value;
+                }
+                else
+                {
+                    name = "Название не указано";
+                }
+            }
         }
 
         public int Cost
         {
-            get { return cost; }
-            set { cost = value; }
+            get
+            {
+                if (cost == 0)
+                {
+                    Console.WriteLine("Цена не указана");
+                    return 30;
+                }
+                else
+                {
+                    return cost;
+                }
+            }
+            set
+            {
+                if (cost == 0)
+                {
+                    Console.WriteLine("Цена не указана");
+                    cost = 30;
+                }
+                else
+                {
+                    cost = value;
+                }
+            }
         }
     }
 }

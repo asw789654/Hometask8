@@ -68,14 +68,7 @@
 
         public bool fly()
         {
-            if (BeePart >= ElephantPart)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return BeePart >= ElephantPart;
         }
 
         public string Trumpet()
